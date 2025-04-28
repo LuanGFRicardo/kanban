@@ -4,6 +4,13 @@ import React, { useEffect, useState } from "react";
 // Importa o axios para fazer requisições HTTP
 import axios from "axios";
 
+// Importa os componentes que serão usados na página
+import Column from "../components/Column.js";
+import CardTarefa from "../components/CardTarefa.js";
+import ModalNovaTarefa from "../components/ModalNovaTarefa.js";
+import ModalTarefa from "../components/ModalTarefa.js";
+import Navbar from "../components/Navbar.js";
+
 // Componente principal da página de tarefas
 function TarefaPage() {
   // Estados para armazenar tarefas, exibir modal de nova tarefa e tarefa selecionada
@@ -74,6 +81,70 @@ function TarefaPage() {
   const tarefasPorStatus = (status) => {
     return tarefas.filter((tarefa) => tarefa.status === status);
   };
+
+  // Renderiza a página
+  return (
+    <>
+      <Navbar />
+      <div className="kanban-board">
+        <Column titulo="Aguardando">
+          <button onClick={() => setMostrarModalNova(true)} className="btn-adicionar">Nova Tarefa</button>
+          {tarefasPorStatus("Aguardando").map((tarefa) => (
+            <CardTarefa
+              key={tarefa.id}
+              id={tarefa.id}
+              titulo={tarefa.titulo}
+              descricao={tarefa.descricao}
+              onClick={() => setTarefaSelecionada(tarefa)}
+            />
+          ))}
+        </Column>
+
+        <Column titulo="Em Andamento">
+          {tarefasPorStatus("Em Andamento").map((tarefa) => (
+            <CardTarefa
+              key={tarefa.id}
+              id={tarefa.id}
+              titulo={tarefa.titulo}
+              descricao={tarefa.descricao}
+              onClick={() => setTarefaSelecionada(tarefa)}
+            />
+          ))}
+        </Column>
+
+        <Column titulo="Concluída">
+          {tarefasPorStatus("Concluída").map((tarefa) => (
+            <CardTarefa
+              key={tarefa.id}
+              id={tarefa.id}
+              titulo={tarefa.titulo}
+              descricao={tarefa.descricao}
+              onClick={() => setTarefaSelecionada(tarefa)}
+            />
+          ))}
+        </Column>
+      </div>
+
+      {/* Modal para criar nova tarefa */}
+      {mostrarModalNova && (
+        <ModalNovaTarefa 
+          onClose={() => setMostrarModalNova(false)} 
+          onCreate={cadastrarTarefa} 
+        />
+      )}
+
+      {/* Modal para editar ou deletar tarefa */}
+      {tarefaSelecionada && (
+        <ModalTarefa 
+          tarefa={tarefaSelecionada} 
+          onClose={() => setTarefaSelecionada(null)} 
+          onSave={salvarTarefaEditada}
+          onDelete={deletarTarefa}
+        />
+      )}
+    </>
+  );
 }
+
 // Exporta a página
 export default TarefaPage;
