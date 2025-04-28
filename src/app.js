@@ -1,72 +1,35 @@
+// Importa o framework Express para criar o servidor
 import express from "express";
 
+// Importa a configuração de conexão com o banco de dados
+import db from "./config/dbConnect.js";
+
+// Importa o pacote dotenv para gerenciar variáveis de ambiente (.env)
+import dotenv from "dotenv";
+
+// Importa o arquivo de rotas de tarefas
+import tarefaRoutes from "./routes/tarefaRoutes.js";
+
+// Carrega as variáveis de ambiente do arquivo .env
+dotenv.config();
+
+// Cria uma instância do Express
 const app = express();
+
+// Configura o servidor para aceitar requisições com JSON no corpo
 app.use(express.json());
 
-let tarefas = [
-    {
-        id: 1,
-        titulo: "Criar layout inicial",
-        descricao: "Desenvolver o layout da tela de login",
-        status: "TO_DO",
-        quadroId: 101
-    },
-    {
-        id: 2,
-        titulo: "Implementar autenticação",
-        descricao: "Adicionar login com JWT",
-        status: "IN_PROGRESS",
-        quadroId: 101
-    }
-];
+// Sincroniza o banco de dados com os modelos definidos
+db.sync()
+  .then(() => {
+    console.log("Banco de dados conectado e sincronizado com sucesso!"); // Se a conexão der certo
+  })
+  .catch((error) => {
+    console.error("Erro ao conectar no banco de dados:", error); // Se a conexão falhar
+  });
 
-function buscarTarefa(id) {
-    return tarefas.findIndex(tarefa => tarefa.id === Number(id));
-}
+// Define o prefixo '/api/tarefas' para as rotas de tarefas
+app.use("/api/tarefas", tarefaRoutes);
 
-app.get("/", (req, res) => {
-    res.status(200).send("API de Tarefas com Express e Node.js");
-});
-
-app.get("/tarefas", (req, res) => {
-    res.status(200).json(tarefas);
-});
-
-app.post("/tarefas", (req, res) => {
-    tarefas.push(req.body);
-    res.status(201).send("Tarefa criada com sucesso!");
-});
-
-app.get("/tarefas/:id", (req, res) => {
-    const index = buscarTarefa(req.params.id);
-    if (index !== -1) {
-        res.status(200).json(tarefas[index]);
-    } else {
-        res.status(404).send("Tarefa não encontrada");
-    }
-});
-
-app.put("/tarefas/:id", (req, res) => {
-    const index = buscarTarefa(req.params.id);
-    if (index !== -1) {
-        tarefas[index] = {
-            ...tarefas[index],
-            ...req.body
-        };
-        res.status(200).json(tarefas[index]);
-    } else {
-        res.status(404).send("Tarefa não encontrada");
-    }
-});
-
-app.delete("/tarefas/:id", (req, res) => {
-    const index = buscarTarefa(req.params.id);
-    if (index !== -1) {
-        tarefas.splice(index, 1);
-        res.status(200).send("Tarefa removida com sucesso!");
-    } else {
-        res.status(404).send("Tarefa não encontrada");
-    }
-});
-
+// Exporta o app para ser utilizado em outro arquivo (por exemplo, no servidor principal)
 export default app;
