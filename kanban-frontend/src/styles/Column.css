@@ -1,0 +1,38 @@
+.column {
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    padding: 16px;
+    width: 500px;
+    margin: 0 10px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .column-title {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 8px;
+  }
+  
+  .column-content {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .btn-adicionar {
+    background-color: #007bff;
+    color: #fff;
+    font-size: 1rem;
+    padding: 0.6rem 1rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+  }
+  
+  .btn-adicionar:hover {
+    background-color: #0056b3;
+  }
+  
