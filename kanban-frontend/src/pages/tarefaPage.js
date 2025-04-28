@@ -11,6 +11,9 @@ import ModalNovaTarefa from "../components/ModalNovaTarefa.js";
 import ModalTarefa from "../components/ModalTarefa.js";
 import Navbar from "../components/Navbar.js";
 
+// Importa os estilos da página
+import "../styles/tarefaPage.css";
+
 // Componente principal da página de tarefas
 function TarefaPage() {
   // Estados para armazenar tarefas, exibir modal de nova tarefa e tarefa selecionada
