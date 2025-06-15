@@ -16,7 +16,7 @@ const Tarefa = db.define('Tarefa', {
   // Define a coluna 'descricao' do tipo STRING (texto) e que não pode ser nula
   descricao: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: true
   },
 
   // Define a coluna 'status' como um ENUM, aceitando apenas os valores especificados
