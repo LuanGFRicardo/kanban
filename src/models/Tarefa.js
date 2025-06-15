@@ -21,8 +21,8 @@ const Tarefa = db.define('Tarefa', {
 
   // Define a coluna 'status' como um ENUM, aceitando apenas os valores especificados
   status: {
-    type: DataTypes.ENUM('Aguardando', 'Em Andamento', 'Concluída'),
-    allowNull: false
+    type: DataTypes.STRING,
+    allowNull: true
   },
 
   // Define a coluna 'quadroId' como um número inteiro (INTEGER) que não pode ser nulo
