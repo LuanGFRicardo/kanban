@@ -16,6 +16,9 @@ import tarefaRoutes from "./routes/tarefaRoutes.js";
 // Importa as rotas relacionadas aos usuários
 import usuarioRoutes from "./routes/usuarioRoutes.js";
 
+// um único ponto de entrada para os models
+import "./models/index.js";
+
 // Carrega as variáveis do arquivo .env
 dotenv.config();
 
@@ -42,6 +45,8 @@ app.use("/api/usuarios", usuarioRoutes);
 
 // Define as rotas para tarefas, utilizando o prefixo /api/tarefas
 app.use("/api/tarefas", tarefaRoutes);
+
+app.use("/api/colunas", colunaRoutes);
 
 // Exporta a instância do app para ser usada no servidor principal (server.js)
 export default app;
