@@ -5,15 +5,6 @@ class ColunaController {
   constructor() {
     this.colunaService = new ColunaService();
   }
-  
-  static async listarColunas(req, res) {
-    try {
-      const colunas = await Coluna.findAll();
-      res.status(200).json(colunas);
-    } catch (error) {
-      res.status(500).json({ message: `${error.message} - falha ao listar colunas` });
-    }
-  }
 
   createColuna = async (req, res) => {
     try {
@@ -26,6 +17,16 @@ class ColunaController {
       if (error.message === "Quadro não existe.") {
         return res.status(404).json({ message: error.message });
       }
+      res.status(500).send(error.message);
+    }
+  };
+
+
+  getAllColunas = async (req, res) => {
+    try {
+      const colunas = await this.colunaService.getAllColunas();
+      res.status(200).json(colunas.map((coluna) => new ColunaDto(coluna)));
+    } catch (error) {
       res.status(500).send(error.message);
     }
   };
