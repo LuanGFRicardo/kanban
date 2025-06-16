@@ -36,6 +36,18 @@ class QuadroController {
     }
   };
 
+  getQuadroById = async (req, res) => {
+    try {
+      const quadro = await this.quadroService.getQuadroById(req.params.id);
+      if (!quadro) {
+        return res.status(404).send("Quadro não encontrado!");
+      }
+      res.status(200).json(new QuadroDto(quadro));
+    } catch (error) {
+      res.status(500).send(error.message);
+    }
+  };
+
   static async atualizarQuadro(req, res) {
     try {
       const id = req.params.id;
