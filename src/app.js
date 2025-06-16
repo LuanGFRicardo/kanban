@@ -13,6 +13,8 @@ import dotenv from "dotenv";
 // Importa as rotas relacionadas às tarefas
 import tarefaRoutes from "./routes/tarefaRoutes.js";
 
+import quadroRoutes from "./routes/quadrosRoutes.js";
+
 // Importa as rotas relacionadas aos usuários
 import usuarioRoutes from "./routes/usuarioRoutes.js";
 
@@ -45,6 +47,8 @@ app.use("/api/usuarios", usuarioRoutes);
 
 // Define as rotas para tarefas, utilizando o prefixo /api/tarefas
 app.use("/api/tarefas", tarefaRoutes);
+
+app.use("/api/quadros", quadroRoutes);
 
 app.use("/api/colunas", colunaRoutes);
 
