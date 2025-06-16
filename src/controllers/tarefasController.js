@@ -43,24 +43,25 @@ class TarefaController {
     }
   };
 
-  // Atualiza uma tarefa existente
-  static async atualizarTarefa(req, res) {
+  updateTarefa = async (req, res) => {
     try {
-      const id = req.params.id; // Captura o ID da tarefa a ser atualizada
-      const [atualizou] = await Tarefa.update(req.body, {
-        where: { id: id } // Atualiza a tarefa onde o ID bate com o informado
+      const tarefaAtualizada = await this.tarefaService.updateTarefa(req.params.id, req.body);
+      res.status(200).json({
+        message: "Tarefa atualizada com sucesso!",
+        tarefa: new TarefaDto(tarefaAtualizada),
       });
-
-      if (atualizou) {
-        const tarefaAtualizada = await Tarefa.findByPk(id); // Busca a tarefa atualizada
-        res.status(200).json({ message: "Tarefa atualizada com sucesso", tarefa: tarefaAtualizada }); // Retorna a tarefa atualizada
-      } else {
-        res.status(404).send("Tarefa não encontrada"); // Se não encontrar a tarefa para atualizar, retorna status 404
-      }
     } catch (error) {
-      res.status(500).json({ message: `${error.message} - falha ao atualizar tarefa` }); // Em caso de erro, retorna status 500
+      if (
+        error.message === "Tarefa não encontrada." ||
+        error.message === "Quadro informado não existe." ||
+        error.message === "Coluna informada não existe."
+      ) {
+        return res.status(404).json({ message: error.message });
+      }
+      res.status(500).send(error.message);
+
     }
-  }
+  };
 
   // Deleta uma tarefa do banco de dados
   static async deletarTarefa(req, res) {
