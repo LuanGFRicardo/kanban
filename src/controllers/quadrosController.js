@@ -48,20 +48,20 @@ class QuadroController {
     }
   };
 
-  static async atualizarQuadro(req, res) {
+  updateQuadro = async (req, res) => {
     try {
-      const id = req.params.id;
-      const [atualizou] = await Quadro.update(req.body, { where: { id } });
-      if (atualizou) {
-        const quadroAtualizado = await Quadro.findByPk(id);
-        res.status(200).json({ message: "Quadro atualizado com sucesso", quadro: quadroAtualizado });
-      } else {
-        res.status(404).send("Quadro não encontrado");
+      const updatedQuadro = await this.quadroService.updateQuadro(req.params.id, req.body);
+      if (!updatedQuadro) {
+        return res.status(404).send("Quadro não encontrado!");
       }
+      res.status(201).json({
+        message: "Quadro atualizado com sucesso!",
+        quadro: new QuadroDto(updatedQuadro),
+      });
     } catch (error) {
-      res.status(500).json({ message: `${error.message} - falha ao atualizar quadro` });
+      res.status(500).send(error.message);
     }
-  }
+  };
 
   static async deletarQuadro(req, res) {
     try {
