@@ -23,5 +23,17 @@ Quadro.hasMany(Coluna, {
   onUpdate: "CASCADE"      // Ao alterar o ID do quadro, o valor será atualizado nas colunas
 });
 
+// RELACIONAMENTO: USUÁRIO ↔ QUADRO (1:N)
+// Um usuário pode ter vários quadros
+Usuario.hasMany(Quadro, {
+  foreignKey: "usuarioId",  // Campo em Quadro que referencia o Usuário
+});
+
+// RELACIONAMENTO: QUADRO → USUÁRIO (N:1)
+// Cada quadro pertence a um único usuário
+Quadro.belongsTo(Usuario, {
+  foreignKey: "usuarioId",  // Campo em Quadro que referencia o Usuário
+});
+
 // Exporta os modelos com os relacionamentos aplicados
 export { Tarefa, Coluna, Quadro, Usuario};
