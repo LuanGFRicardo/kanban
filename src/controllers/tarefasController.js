@@ -73,6 +73,22 @@ class TarefaController {
       res.status(404).send(error.message);
     }
   };
+
+  searchTarefaByTitulo = async (req, res) => {
+    try {
+      const { titulo } = req.params;
+      const tarefas = await this.tarefaService.searchTarefasByTitulo(titulo);
+      if (tarefas.length === 0) {
+        return res.status(404).json({
+          message: "Nenhuma tarefa encontrada com o título informado.",
+          titulo: titulo,
+        });
+      }
+      res.status(200).json(tarefas.map((t) => new TarefaDto(t)));
+    } catch (error) {
+      res.status(500).send(error.message);
+    }
+  };
 }
 
 // Exporta o TarefaController para ser usado nas rotas
