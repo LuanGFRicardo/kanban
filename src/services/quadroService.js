@@ -8,6 +8,11 @@ export class QuadroService {
 
   createQuadro = async (quadroData) => {
     const quadro = QuadroDto.fromRequest(quadroData);
+    // verifica se existe o usuario
+    const usuario = await Usuario.findByPk(quadro.usuarioId);
+    if (!usuario) {
+      throw new Error("Usuário não existe.");
+    }
     return await this.quadroRepository.create(quadro);
   };
 
