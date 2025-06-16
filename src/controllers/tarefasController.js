@@ -63,23 +63,16 @@ class TarefaController {
     }
   };
 
-  // Deleta uma tarefa do banco de dados
-  static async deletarTarefa(req, res) {
+  deleteTarefa = async (req, res) => {
     try {
-      const id = req.params.id; // Captura o ID da tarefa a ser deletada
-      const deletou = await Tarefa.destroy({
-        where: { id: id } // Deleta a tarefa onde o ID bate com o informado
+      await this.tarefaService.deleteTarefa(req.params.id);
+      res.status(200).json({
+        message: "Tarefa removida com sucesso!",
       });
-
-      if (deletou) {
-        res.status(200).json({ message: "Tarefa removida com sucesso" }); // Se deletou, retorna sucesso
-      } else {
-        res.status(404).send("Tarefa não encontrada"); // Se não encontrar a tarefa para deletar, retorna status 404
-      }
     } catch (error) {
-      res.status(500).json({ message: `${error.message} - falha ao remover tarefa` }); // Em caso de erro, retorna status 500
+      res.status(404).send(error.message);
     }
-  }
+  };
 }
 
 // Exporta o TarefaController para ser usado nas rotas
