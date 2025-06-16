@@ -2,6 +2,10 @@ import Coluna from "../models/Coluna.js";
 import { ColunaDto } from "../dtos/colunaDTO.js";
 
 class ColunaController {
+  constructor() {
+    this.colunaService = new ColunaService();
+  }
+  
   static async listarColunas(req, res) {
     try {
       const colunas = await Coluna.findAll();
