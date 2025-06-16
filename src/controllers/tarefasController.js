@@ -34,21 +34,14 @@ class TarefaController {
     }
   };
 
-  // Busca uma tarefa específica pelo ID
-  static async buscarTarefaPorId(req, res) {
+  getTarefaById = async (req, res) => {
     try {
-      const id = req.params.id; // Captura o ID da tarefa pelos parâmetros da requisição
-      const tarefaEncontrada = await Tarefa.findByPk(id); // Busca a tarefa pelo ID (chave primária)
-
-      if (tarefaEncontrada) {
-        res.status(200).json(tarefaEncontrada); // Se encontrar, retorna a tarefa
-      } else {
-        res.status(404).send("Tarefa não encontrada"); // Se não encontrar, retorna status 404
-      }
+      const tarefa = await this.tarefaService.getTarefaById(req.params.id);
+      res.status(200).json(new TarefaDto(tarefa));
     } catch (error) {
-      res.status(500).json({ message: `${error.message} - falha ao buscar tarefa` }); // Em caso de erro, retorna status 500
+      res.status(404).send(error.message);
     }
-  }
+  };
 
   // Atualiza uma tarefa existente
   static async atualizarTarefa(req, res) {
