@@ -1,17 +1,35 @@
-// Importa o React
-import React from "react";
+import { useNavigate } from "react-router-dom";
+import { Navbar, Container, Nav } from "react-bootstrap";
+import { ArrowLeft } from "react-bootstrap-icons";
+import { Link } from "react-router-dom";
 
-// Importa o arquivo de estilos da navbar
-import "../styles/Navbar.css";
+function AppNavbar({ onVoltar }) {
+  const navigate = useNavigate();
 
-// Componente que representa a barra de navegação no topo da página
-function Navbar() {
   return (
-    <nav className="navbar">
-      <div className="navbar-logo">UniKanban</div> {/* Nome ou logo da aplicação */}
-    </nav>
+    <Navbar bg="dark" variant="dark" expand="lg">
+      <Container>
+        <div className="d-flex align-items-center gap-2">
+          {onVoltar && (
+            <ArrowLeft
+              size={24}
+              style={{ cursor: "pointer", color: "white" }}
+              onClick={onVoltar}
+            />
+          )}
+          <Navbar.Brand onClick={() => navigate("/quadros")} style={{ cursor: "pointer" }}>
+            Kanban
+          </Navbar.Brand>
+        </div>
+        <Navbar.Toggle aria-controls="kanban-navbar" />
+        <Navbar.Collapse id="kanban-navbar">
+          <Nav className="ms-auto">
+            <Nav.Link as={Link} to="/usuario">Perfil</Nav.Link>
+          </Nav>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
   );
 }
 
-// Exporta o componente para uso no topo da aplicação
-export default Navbar;
+export default AppNavbar;

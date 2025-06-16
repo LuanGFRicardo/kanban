@@ -1,49 +1,78 @@
-// Importa o React e o hook useState para gerenciar o estado interno do modal
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { Modal, Button, Form } from "react-bootstrap";
 
-// Importa o arquivo de estilos para o modal de nova tarefa
-import "../styles/ModalNovaTarefa.css";
+function ModalNovaTarefa({ show, onClose, onCreate }) {
+  const [titulo, setTitulo] = useState("");
+  const [descricao, setDescricao] = useState("");
+  const [status, setStatus] = useState("");
 
-// Componente que representa o modal para criar uma nova tarefa
-function ModalNovaTarefa({ onClose, onCreate }) {
-  const [titulo, setTitulo] = useState(""); // Estado para o título da nova tarefa
-  const [descricao, setDescricao] = useState(""); // Estado para a descrição da nova tarefa
+  useEffect(() => {
+    if (!show) {
+      setTitulo("");
+      setDescricao("");
+      setStatus("");
+    }
+  }, [show]);
 
-  // Função que trata o envio do formulário
   const handleSubmit = (e) => {
     e.preventDefault();
-    onCreate(titulo, descricao); // Chama a função recebida para criar a tarefa
-    setTitulo(""); // Limpa o campo de título
-    setDescricao(""); // Limpa o campo de descrição
+    onCreate(titulo, descricao, status);
   };
 
   return (
-    <div className="modal-overlay">
-      <div className="modal">
-        <h2>Nova Tarefa</h2>
-        <form onSubmit={handleSubmit} className="modal-form">
-          <input
-            type="text"
-            placeholder="Título"
-            value={titulo}
-            onChange={(e) => setTitulo(e.target.value)}
-            required
-          />
-          <textarea
-            placeholder="Descrição"
-            value={descricao}
-            onChange={(e) => setDescricao(e.target.value)}
-            required
-          ></textarea>
-          <div className="modal-buttons">
-            <button type="submit" className="btn-criar">Criar</button> {/* Botão para criar a tarefa */}
-            <button type="button" onClick={onClose} className="btn-cancelar">Cancelar</button> {/* Botão para fechar o modal */}
-          </div>
-        </form>
-      </div>
-    </div>
+    <Modal show={show} onHide={onClose} backdrop="static" centered>
+      <Modal.Header closeButton>
+        <Modal.Title>Nova Tarefa</Modal.Title>
+      </Modal.Header>
+      <Form onSubmit={handleSubmit}>
+        <Modal.Body>
+          <Form.Group className="mb-3">
+            <Form.Label>Título</Form.Label>
+            <Form.Control
+              type="text"
+              value={titulo}
+              onChange={(e) => setTitulo(e.target.value)}
+              required
+            />
+          </Form.Group>
+
+          <Form.Group className="mb-3">
+            <Form.Label>Descrição</Form.Label>
+            <Form.Control
+              as="textarea"
+              rows={3}
+              value={descricao}
+              onChange={(e) => setDescricao(e.target.value)}
+              required
+            />
+          </Form.Group>
+
+          <Form.Group>
+            <Form.Label>Status</Form.Label>
+            <Form.Select
+              value={status}
+              onChange={(e) => setStatus(e.target.value)}
+            >
+               <option value="">Selecione o status</option>
+              <option value="Aguardando">Aguardando</option>
+              <option value="Em Andamento">Em Andamento</option>
+              <option value="Concluído">Concluído</option>
+              <option value="Cancelada">Cancelada</option>
+              <option value="Paralisada">Paralisada</option>
+            </Form.Select>
+          </Form.Group>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={onClose}>
+            Cancelar
+          </Button>
+          <Button type="submit" variant="primary">
+            Criar
+          </Button>
+        </Modal.Footer>
+      </Form>
+    </Modal>
   );
 }
 
-// Exporta o componente para uso
 export default ModalNovaTarefa;

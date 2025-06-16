@@ -4,8 +4,8 @@ import React from 'react';
 // Importa o ReactDOM para renderizar a aplicação na página HTML
 import ReactDOM from 'react-dom/client';
 
-// Importa o arquivo de estilos globais
-import './styles/index.css';
+// Importa o CSS do Bootstrap
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 // Importa o componente App principal
 import App from './App';

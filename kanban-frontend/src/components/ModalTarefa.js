@@ -1,59 +1,85 @@
-// Importa o React e os hooks useState e useEffect
 import React, { useState, useEffect } from "react";
+import { Modal, Button, Form } from "react-bootstrap";
 
-// Importa o arquivo de estilos do modal de edição de tarefa
-import "../styles/ModalTarefa.css";
-
-// Componente que representa o modal para visualizar, editar ou deletar uma tarefa existente
 function ModalTarefa({ tarefa, onClose, onSave, onDelete }) {
-  const [titulo, setTitulo] = useState(""); // Estado para o título da tarefa
-  const [descricao, setDescricao] = useState(""); // Estado para a descrição da tarefa
+  const [titulo, setTitulo] = useState("");
+  const [descricao, setDescricao] = useState("");
+  const [status, setStatus] = useState("");
 
-  // Atualiza os campos do modal sempre que a tarefa muda
   useEffect(() => {
     if (tarefa) {
       setTitulo(tarefa.titulo);
       setDescricao(tarefa.descricao);
+      setStatus(tarefa.status || "");
     }
   }, [tarefa]);
 
-  // Função que trata o envio do formulário
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSave(tarefa.id, titulo, descricao); // Chama a função para salvar alterações
+    onSave(tarefa.id, titulo, descricao, status);
   };
 
-  // Se não houver tarefa selecionada, não renderiza nada
-  if (!tarefa) return null;
-
   return (
-    <div className="modal-overlay">
-      <div className="modal">
-        <h2>Informações da Tarefa</h2>
-        <form onSubmit={handleSubmit} className="modal-form">
-          <input
-            type="text"
-            value={titulo}
-            onChange={(e) => setTitulo(e.target.value)}
-            placeholder="Título da Tarefa"
-            required
-          />
-          <textarea
-            value={descricao}
-            onChange={(e) => setDescricao(e.target.value)}
-            placeholder="Descrição da Tarefa"
-            required
-          />
-          <div className="modal-buttons">
-            <button type="submit" className="btn-salvar">Salvar</button> {/* Botão para salvar alterações */}
-            <button type="button" onClick={() => onDelete(tarefa.id)} className="btn-deletar">Deletar</button> {/* Botão para deletar a tarefa */}
-            <button type="button" onClick={onClose} className="btn-fechar">Cancelar</button> {/* Botão para fechar o modal */}
-          </div>
-        </form>
-      </div>
-    </div>
+    <Modal show={!!tarefa} onHide={onClose} backdrop="static" centered>
+      <Form onSubmit={handleSubmit}>
+        <Modal.Header closeButton>
+          <Modal.Title>Sobre</Modal.Title>
+        </Modal.Header>
+
+        <Modal.Body>
+          <Form.Group className="mb-3">
+            <Form.Label>Título</Form.Label>
+            <Form.Control
+              type="text"
+              value={titulo}
+              onChange={(e) => setTitulo(e.target.value)}
+              placeholder="Título da Tarefa"
+              required
+            />
+          </Form.Group>
+
+          <Form.Group className="mb-3">
+            <Form.Label>Descrição</Form.Label>
+            <Form.Control
+              as="textarea"
+              rows={3}
+              value={descricao}
+              onChange={(e) => setDescricao(e.target.value)}
+              required
+            />
+          </Form.Group>
+
+          <Form.Group className="mb-3">
+            <Form.Label>Status</Form.Label>
+            <Form.Select
+              value={status}
+              onChange={(e) => setStatus(e.target.value)}
+              required
+            >
+              <option value="">Selecione o status</option>
+              <option value="Aguardando">Aguardando</option>
+              <option value="Em Andamento">Em Andamento</option>
+              <option value="Concluído">Concluído</option>
+              <option value="Cancelada">Cancelada</option>
+              <option value="Paralisada">Paralisada</option>
+            </Form.Select>
+          </Form.Group>
+        </Modal.Body>
+
+        <Modal.Footer>
+          <Button variant="danger" onClick={() => onDelete(tarefa.id)}>
+            Deletar
+          </Button>
+          <Button variant="secondary" onClick={onClose}>
+            Cancelar
+          </Button>
+          <Button type="submit" variant="primary">
+            Salvar
+          </Button>
+        </Modal.Footer>
+      </Form>
+    </Modal>
   );
 }
 
-// Exporta o componente para uso
 export default ModalTarefa;
