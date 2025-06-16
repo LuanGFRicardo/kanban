@@ -6,15 +6,17 @@ class UsuarioController {
     this.usuarioService = new UsuarioService();
   }
 
-  // Método para criar um novo usuário
-  static async criarUsuario(req, res) {
+  createUsuario = async (req, res) => {
     try {
-      const novoUsuario = await Usuario.create(req.body); // Cria um novo usuário com os dados enviados no corpo da requisição
-      res.status(201).json({ message: "Usuário criado com sucesso!", usuario: novoUsuario }); // Retorna status 201 e o novo usuário
+      const novoUsuario = await this.usuarioService.createUsuario(req.body);
+      res.status(201).json({
+        message: "Usuário criado com sucesso!",
+        usuario: new UsuarioDto(novoUsuario),
+      });
     } catch (error) {
-      res.status(500).json({ message: error.message }); // Em caso de erro, retorna status 500 e a mensagem do erro
+      res.status(500).send(error.message);
     }
-  }
+  };
 
   // Método para listar todos os usuários cadastrados
   static async listarUsuarios(req, res) {
