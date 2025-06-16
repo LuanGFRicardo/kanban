@@ -6,15 +6,6 @@ class QuadroController {
     this.quadroService = new QuadroService();
   }
 
-  static async listarQuadros(req, res) {
-    try {
-      const quadros = await Quadro.findAll();
-      res.status(200).json(quadros);
-    } catch (error) {
-      res.status(500).json({ message: `${error.message} - falha ao listar quadros` });
-    }
-  }
-
   createQuadro = async (req, res) => {
     try {
       const quadroData = {

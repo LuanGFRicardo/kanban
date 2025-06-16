@@ -7,6 +7,20 @@ export class TarefaService {
   }
 
   createTarefa = async (tarefaData) => {
+    const { quadroId, colunaId } = tarefaData;
+
+    // Verifica se o quadro existe
+    const quadro = await Quadro.findByPk(quadroId);
+    if (!quadro) {
+      throw new Error("Quadro informado não existe.");
+    }
+
+    // Verifica se a coluna existe
+    const coluna = await Coluna.findByPk(colunaId);
+    if (!coluna) {
+      throw new Error("Coluna informada não existe.");
+    }
+
     const tarefa = TarefaDto.fromRequest(tarefaData);
     return await this.tarefaRepository.create(tarefa);
   };
