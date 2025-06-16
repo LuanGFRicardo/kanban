@@ -1,5 +1,5 @@
-// Importa o modelo Usuario que representa a tabela de usuários no banco
-import Usuario from "../models/Usuario.js";
+import { UsuarioService } from "../services/usuarioService.js";
+import { UsuarioDto } from "../dtos/usuarioDTO.js";
 
 // Define a classe UsuariosController para controlar as operações relacionadas a usuários
 class UsuariosController {
