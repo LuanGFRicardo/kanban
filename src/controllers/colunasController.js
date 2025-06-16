@@ -31,19 +31,17 @@ class ColunaController {
     }
   };
 
-  static async buscarColunaPorId(req, res) {
+  getColunaById = async (req, res) => {
     try {
-      const id = req.params.id;
-      const coluna = await Coluna.findByPk(id);
-      if (coluna) {
-        res.status(200).json(coluna);
-      } else {
-        res.status(404).send("Coluna não encontrada");
+      const coluna = await this.colunaService.getColunaById(req.params.id);
+      if (!coluna) {
+        return res.status(404).send("Coluna não encontrada!");
       }
+      res.status(200).json(new ColunaDto(coluna));
     } catch (error) {
-      res.status(500).json({ message: `${error.message} - falha ao buscar coluna` });
+      res.status(500).send(error.message);
     }
-  }
+  };
 
   static async atualizarColuna(req, res) {
     try {
