@@ -1,4 +1,4 @@
-import Coluna from "../models/Coluna.js";
+import { ColunaService } from "../services/colunaService.js";
 import { ColunaDto } from "../dtos/colunaDTO.js";
 
 class ColunaController {
@@ -84,4 +84,4 @@ class ColunaController {
   };
 }
 
-export default ColunaController;
+export default new ColunaController();

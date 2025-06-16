@@ -27,14 +27,18 @@ class QuadroController {
     }
   };
 
+  
   getAllQuadros = async (req, res) => {
     try {
-      const quadros = await this.quadroService.getAllQuadros();
+      const usuarioId = req.userId; // vem do token via middleware
+      const quadros = await this.quadroService.getQuadrosByUsuarioId(usuarioId);
       res.status(200).json(quadros.map((quadro) => new QuadroDto(quadro)));
     } catch (error) {
       res.status(500).send(error.message);
     }
   };
+
+
 
   getQuadroById = async (req, res) => {
     try {
@@ -89,4 +93,4 @@ class QuadroController {
   };
 }
 
-export default QuadroController;
+export default new QuadroController();

@@ -1,3 +1,4 @@
+
 import { UsuarioService } from "../services/usuarioService.js";
 import { UsuarioDto } from "../dtos/usuarioDTO.js";
 
@@ -77,5 +78,4 @@ class UsuarioController {
   };
 }
 
-// Exporta o controller para ser usado nas rotas
-export default UsuariosController;
+export default new UsuarioController();

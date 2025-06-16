@@ -63,6 +63,7 @@ class TarefaController {
     }
   };
 
+
   deleteTarefa = async (req, res) => {
     try {
       await this.tarefaService.deleteTarefa(req.params.id);
@@ -91,5 +92,4 @@ class TarefaController {
   };
 }
 
-// Exporta o TarefaController para ser usado nas rotas
-export default TarefaController;
+export default new TarefaController();

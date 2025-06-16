@@ -13,11 +13,12 @@ import dotenv from "dotenv";
 // um único ponto de entrada para os models
 import "./models/index.js"; // simples, limpo e modular
 
-// Importa o arquivo de rotas de tarefas
+// Importa o arquivo de rotas
 import tarefaRoutes from "./routes/tarefaRoutes.js";
 import quadroRoutes from "./routes/quadrosRoutes.js";
 import colunaRoutes from "./routes/colunasRoutes.js";
 import usuarioRoutes from "./routes/usuarioRoutes.js";
+import authRoutes from "./routes/authRoutes.js";
 
 // Carrega as variáveis de ambiente do arquivo .env
 dotenv.config();
@@ -45,6 +46,7 @@ app.use("/api/tarefas", tarefaRoutes);
 app.use("/api/colunas", colunaRoutes);
 app.use("/api/quadros", quadroRoutes);
 app.use("/api/usuarios", usuarioRoutes); 
+app.use("/api", authRoutes); // vai criar a rota /api/auth/login
 
 // Exporta o app para ser utilizado em outro arquivo (por exemplo, no servidor principal)
 export default app;
