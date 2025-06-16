@@ -196,7 +196,6 @@ kanban-frontend/
 | GET    | `/api/quadros/:id`          | Busca um quadro pelo ID           |
 | PUT    | `/api/quadros/:id`          | Atualiza um quadro                |
 | DELETE | `/api/quadros/:id`          | Deleta um quadro                  |
-| GET    | `/api/quadros/search/:nome` | Busca quadros por nome            |
 
 ### 📌 Colunas (`/api/colunas`)
 
