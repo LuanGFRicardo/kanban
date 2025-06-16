@@ -2,6 +2,7 @@
 import Tarefa from "./Tarefa.js";
 import Coluna from "./Coluna.js";
 import Quadro from "./Quadro.js";
+import Usuario from "./Usuario.js";
 
 // Define o relacionamento entre Coluna e Tarefa (1:N):
 // Uma coluna pode conter várias tarefas
@@ -23,4 +24,4 @@ Quadro.hasMany(Coluna, {
 });
 
 // Exporta os modelos com os relacionamentos aplicados
-export { Tarefa, Coluna, Quadro};
+export { Tarefa, Coluna, Quadro, Usuario};
