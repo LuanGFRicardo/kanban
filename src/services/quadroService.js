@@ -1,6 +1,6 @@
 import { QuadroDto } from "../dtos/quadroDTO.js";
+import Usuario from "../models/Usuario.js";
 import { QuadroRepository } from "../repositories/QuadroRepository.js";
-import Usuario from "../models/Usuario.js"; 
 
 export class QuadroService {
   constructor() {
@@ -19,6 +19,11 @@ export class QuadroService {
 
   getAllQuadros = async () => {
     return await this.quadroRepository.findAll();
+  };
+
+  // Adicionado para buscar pelo usuário
+  getQuadrosByUsuarioId = async (usuarioId) => {
+    return await this.quadroRepository.findByUsuarioId(usuarioId);
   };
 
   getQuadroById = async (id) => {
