@@ -217,6 +217,13 @@ kanban-frontend/
 
 ## ⚙️ Instalação e execução
 
+### Clone o repositório:
+
+```bash
+git clone https://github.com/LuanGFRicardo/kanban.git
+cd kanban
+```
+
 ### 🔧 Backend
 
 1. Instale as dependências:
@@ -230,14 +237,6 @@ npm install
 ```bash
 npm start
 ```
-
-ou
-
-```bash
-node server.js
-```
----
-
 ### 🎨 Frontend
 
 > Execute após o backend já estar em funcionamento.
