@@ -6,16 +6,6 @@ class TarefaController {
     this.tarefaService = new TarefaService();
   }
 
-  // Lista todas as tarefas cadastradas no banco de dados
-  static async listarTarefas(req, res) {
-    try {
-      const listaTarefas = await Tarefa.findAll(); // Busca todas as tarefas
-      res.status(200).json(listaTarefas); // Retorna as tarefas encontradas com status 200 (OK)
-    } catch (error) {
-      res.status(500).json({ message: `${error.message} - falha ao listar tarefas` }); // Em caso de erro, retorna status 500
-    }
-  }
-
   createTarefa = async (req, res) => {
     try {
       const novaTarefa = await this.tarefaService.createTarefa(req.body);
@@ -30,6 +20,16 @@ class TarefaController {
       ) {
         return res.status(404).json({ message: error.message });
       }
+      res.status(500).send(error.message);
+    }
+  };
+
+
+  getAllTarefas = async (req, res) => {
+    try {
+      const tarefas = await this.tarefaService.getAllTarefas();
+      res.status(200).json(tarefas.map((t) => new TarefaDto(t)));
+    } catch (error) {
       res.status(500).send(error.message);
     }
   };
