@@ -1,4 +1,5 @@
 import Coluna from "../models/Coluna.js";
+import { ColunaDto } from "../dtos/colunaDTO.js";
 
 class ColunaController {
   static async listarColunas(req, res) {
@@ -10,14 +11,20 @@ class ColunaController {
     }
   }
 
-  static async cadastrarColuna(req, res) {
+  createColuna = async (req, res) => {
     try {
-      const novaColuna = await Coluna.create(req.body);
-      res.status(201).json({ message: "Coluna criada com sucesso!", coluna: novaColuna });
+      const newColuna = await this.colunaService.createColuna(req.body);
+      res.status(201).json({
+        message: "Coluna criada com sucesso!",
+        coluna: new ColunaDto(newColuna),
+      });
     } catch (error) {
-      res.status(500).json({ message: `${error.message} - falha ao cadastrar coluna` });
+      if (error.message === "Quadro não existe.") {
+        return res.status(404).json({ message: error.message });
+      }
+      res.status(500).send(error.message);
     }
-  }
+  };
 
   static async buscarColunaPorId(req, res) {
     try {
