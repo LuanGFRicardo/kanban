@@ -5,7 +5,7 @@ class QuadroController {
   constructor() {
     this.quadroService = new QuadroService();
   }
-  
+
   static async listarQuadros(req, res) {
     try {
       const quadros = await Quadro.findAll();
@@ -15,14 +15,17 @@ class QuadroController {
     }
   }
 
-  static async cadastrarQuadro(req, res) {
+  createQuadro = async (req, res) => {
     try {
-      const novoQuadro = await Quadro.create(req.body);
-      res.status(201).json({ message: "Quadro criado com sucesso!", quadro: novoQuadro });
+      const newQuadro = await this.quadroService.createQuadro(req.body);
+      res.status(201).json({
+        message: "Quadro criado com sucesso!",
+        quadro: new QuadroDto(newQuadro),
+      });
     } catch (error) {
-      res.status(500).json({ message: `${error.message} - falha ao cadastrar quadro` });
+      res.status(500).send(error.message);
     }
-  }
+  };
 
   static async buscarQuadroPorId(req, res) {
     try {
