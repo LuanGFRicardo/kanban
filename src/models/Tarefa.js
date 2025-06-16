@@ -25,17 +25,11 @@ const Tarefa = db.define('Tarefa', {
     allowNull: true
   },
 
-
   // Define a coluna 'quadroId' como um número inteiro (INTEGER) que não pode ser nulo
   quadroId: {
     type: DataTypes.INTEGER,
     allowNull: false
-  },
-
-  colunaId: {
-    type: DataTypes.INTEGER,
-    allowNull: false
-  },
+  }
 
 }, {
   // Configurações adicionais do modelo:

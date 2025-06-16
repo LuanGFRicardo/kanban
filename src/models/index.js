@@ -4,24 +4,36 @@ import Coluna from "./Coluna.js";
 import Quadro from "./Quadro.js";
 import Usuario from "./Usuario.js";
 
-// Define o relacionamento entre Coluna e Tarefa (1:N):
+// RELACIONAMENTO: COLUNA ↔ TAREFA (1:N)
 // Uma coluna pode conter várias tarefas
 Coluna.hasMany(Tarefa, {
-  foreignKey: "colunaId",  // A chave estrangeira na tabela Tarefa que referencia a Coluna
-  onDelete: "CASCADE",     // Ao deletar uma coluna, todas as tarefas associadas serão removidas
-  onUpdate: "CASCADE"      // Ao alterar o ID da coluna, o valor será atualizado nas tarefas também
+  foreignKey: "colunaId",   // Campo em Tarefa que referencia a Coluna
+  onDelete: "CASCADE",      // Ao excluir uma Coluna, exclui suas Tarefas
+  onUpdate: "CASCADE",      // Ao atualizar o ID da Coluna, reflete nas Tarefas
 });
 
-// Cada tarefa pertence a uma única coluna (N:1)
+
+// RELACIONAMENTO: TAREFA → COLUNA (N:1)
+// Cada tarefa pertence a uma única coluna
 Tarefa.belongsTo(Coluna, {
-  foreignKey: "colunaId"   // Chave estrangeira usada na associação
+  foreignKey: "colunaId",   // Campo em Tarefa que referencia a Coluna
 });
 
-Quadro.hasMany(Coluna, {
-  foreignKey: "quadroId",  // A chave estrangeira na tabela Coluna que referencia o Quadro
-  onDelete: "CASCADE",     // Ao deletar um quadro, todas as colunas associadas serão removidas
-  onUpdate: "CASCADE"      // Ao alterar o ID do quadro, o valor será atualizado nas colunas
+// RELACIONAMENTO: COLUNA → QUADRO (N:1)
+// Cada coluna pertence a um único quadro
+Coluna.belongsTo(Quadro, {
+  foreignKey: "quadroId",   // Campo em Coluna que referencia o Quadro
 });
+
+
+// RELACIONAMENTO: QUADRO ↔ COLUNA (1:N)
+// Um quadro pode conter várias colunas
+Quadro.hasMany(Coluna, {
+  foreignKey: "quadroId",   // Campo em Coluna que referencia o Quadro
+  onDelete: "CASCADE",      // Ao excluir um Quadro, exclui suas Colunas
+  onUpdate: "CASCADE",      // Ao atualizar o ID do Quadro, reflete nas Colunas
+});
+
 
 // RELACIONAMENTO: USUÁRIO ↔ QUADRO (1:N)
 // Um usuário pode ter vários quadros
@@ -36,4 +48,4 @@ Quadro.belongsTo(Usuario, {
 });
 
 // Exporta os modelos com os relacionamentos aplicados
-export { Tarefa, Coluna, Quadro, Usuario};
+export { Tarefa, Coluna, Quadro, Usuario };
