@@ -1,12 +1,10 @@
-# 📋 UniKanban - Versão 5
+# 📋 Kanban API - V4 (SQLite)
 
-Este projeto é a versão **V5** do **UniKanban**, um sistema Kanban completo com **Backend** (Node.js + Express + Sequelize + SQLite) e **Frontend** (React.js), incluindo estilização separada por componente usando **CSS modularizado**.
+Este projeto é a versão **V4** da **API REST** de gerenciamento de **usuários** e **tarefas** estilo Kanban, construída com **Node.js**, **Express**, **Sequelize** e **SQLite**.
 
 ---
 
 ## 📁 Estrutura de Pastas
-
-### Backend (`/`)
 
 ```
 src/
@@ -19,68 +17,42 @@ src/
  │    ├── Tarefa.js               // Modelo da tabela de tarefas
  │    └── Usuario.js              // Modelo da tabela de usuários
  ├── routes/
- │    ├── tarefaRoutes.js         // Rotas de tarefas
- │    └── usuarioRoutes.js        // Rotas de usuários
+ │    ├── tarefaRoutes.js         // Rotas das tarefas
+ │    └── usuarioRoutes.js        // Rotas dos usuários
  └── app.js                       // Configuração principal da aplicação
 database.sqlite                   // Banco de dados SQLite
 server.js                         // Inicialização do servidor
-```
-
-### Frontend (`/src`)
-
-```
-src/
- ├── components/
- │    ├── CardTarefa.js
- │    ├── Column.js
- │    ├── ModalNovaTarefa.js
- │    ├── ModalTarefa.js
- │    └── Navbar.js
- ├── pages/
- │    └── tarefaPage.js
- ├── styles/
- │    ├── CardTarefa.css
- │    ├── Column.css
- │    ├── ModalNovaTarefa.css
- │    ├── ModalTarefa.css
- │    ├── Navbar.css
- │    ├── tarefaPage.css
- │    └── index.css
- ├── App.js
- └── index.js
 ```
 
 ---
 
 ## 🚀 Tecnologias utilizadas
 
-### Backend
 - **Node.js**
 - **Express**
 - **Sequelize**
 - **SQLite**
-- **CORS**
 - **Dotenv**
-
-### Frontend
-- **React.js**
-- **React Router Dom**
-- **Axios**
-- **CSS modularizado** (um arquivo de estilo para cada componente)
 
 ---
 
 ## ⚙️ Instalação e execução
 
-### Backend
+1. Clone o repositório:
 
-1. Instale as dependências:
+```bash
+git clone https://github.com/seu-usuario/kanban-v4-sqlite.git
+```
+
+2. Instale as dependências:
 
 ```bash
 npm install
 ```
 
-2. Execute o servidor:
+3. (Opcional) Configure seu arquivo `.env` se necessário.
+
+4. Execute o servidor:
 
 ```bash
 npm start
@@ -90,31 +62,13 @@ ou
 node server.js
 ```
 
-O Backend estará rodando na porta **3000**.
-
----
-
-### Frontend
-
-1. Instale as dependências do React:
-
-```bash
-npm install
-```
-
-2. Execute o Frontend:
-
-```bash
-npm start
-```
-
-O Frontend estará rodando na porta **3000** (pode ser necessário mudar se o Backend já estiver usando).
+5. A aplicação estará disponível na porta **3000**.
 
 ---
 
 ## 📚 Endpoints disponíveis
 
-### Tarefas (`/api/tarefas`)
+### 🔹 Tarefas (`/api/tarefas`)
 
 | Método | Rota               | Descrição                         |
 |--------|---------------------|-----------------------------------|
@@ -124,7 +78,7 @@ O Frontend estará rodando na porta **3000** (pode ser necessário mudar se o Ba
 | PUT    | `/api/tarefas/:id`    | Atualiza uma tarefa pelo ID       |
 | DELETE | `/api/tarefas/:id`    | Deleta uma tarefa pelo ID         |
 
-### Usuários (`/api/usuarios`)
+### 🔹 Usuários (`/api/usuarios`)
 
 | Método | Rota               | Descrição                         |
 |--------|---------------------|-----------------------------------|
@@ -144,8 +98,8 @@ O Frontend estará rodando na porta **3000** (pode ser necessário mudar se o Ba
 | descricao  | STRING  | Obrigatório                        |
 | status     | ENUM    | Aguardando, Em Andamento, Concluída |
 | quadroId   | INTEGER | Obrigatório                        |
-| createdAt  | DATE    | Automático                         |
-| updatedAt  | DATE    | Automático                         |
+| createdAt  | DATE    | Gerado automaticamente             |
+| updatedAt  | DATE    | Gerado automaticamente             |
 
 ### 📌 Tabela: `Usuarios`
 
@@ -155,55 +109,31 @@ O Frontend estará rodando na porta **3000** (pode ser necessário mudar se o Ba
 | nome       | STRING  | Obrigatório           |
 | email      | STRING  | Obrigatório, Único    |
 | senha      | STRING  | Obrigatório           |
-| createdAt  | DATE    | Automático             |
-| updatedAt  | DATE    | Automático             |
-
----
-
-## 🖌️ Estilização
-
-Cada componente possui seu próprio arquivo de CSS, localizado em `/styles`:
-
-- `CardTarefa.css`
-- `Column.css`
-- `ModalNovaTarefa.css`
-- `ModalTarefa.css`
-- `Navbar.css`
-- `tarefaPage.css`
-- `index.css` (estilos globais)
-
----
-
-## 🖥️ Tela inicial
-
-- Página `/` mostra o quadro Kanban dividido em:
-  - **Aguardando**
-  - **Em Andamento**
-  - **Concluída**
-- Botão para adicionar nova tarefa
-- Modal para editar ou excluir tarefas
-- Navbar com o título "UniKanban"
+| createdAt  | DATE    | Gerado automaticamente |
+| updatedAt  | DATE    | Gerado automaticamente |
 
 ---
 
 ## 🔥 Exemplos de Teste
 
-### Criar novo usuário (POST `/api/usuarios`)
+Você pode testar a API usando ferramentas como **Postman** ou **Insomnia**.
+
+### 📋 Criar usuário (POST `/api/usuarios`)
 
 ```json
 {
-  "nome": "Ana Souza",
-  "email": "ana@example.com",
+  "nome": "João da Silva",
+  "email": "joao@example.com",
   "senha": "123456"
 }
 ```
 
-### Criar nova tarefa (POST `/api/tarefas`)
+### 📋 Criar tarefa (POST `/api/tarefas`)
 
 ```json
 {
-  "titulo": "Implementar autenticação",
-  "descricao": "Usar JWT para proteger rotas",
+  "titulo": "Estudar Node.js",
+  "descricao": "Ler sobre Express e Sequelize",
   "status": "Aguardando",
   "quadroId": 1
 }
