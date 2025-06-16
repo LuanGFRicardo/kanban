@@ -17,12 +17,21 @@ class QuadroController {
 
   createQuadro = async (req, res) => {
     try {
-      const newQuadro = await this.quadroService.createQuadro(req.body);
+      const quadroData = {
+        ...req.body,
+        usuarioId: req.userId, // vem do token
+      };
+
+      const newQuadro = await this.quadroService.createQuadro(quadroData);
+
       res.status(201).json({
         message: "Quadro criado com sucesso!",
         quadro: new QuadroDto(newQuadro),
       });
     } catch (error) {
+      if (error.message === "Usuário não existe.") {
+        return res.status(404).json({ message: error.message });
+      }
       res.status(500).send(error.message);
     }
   };
