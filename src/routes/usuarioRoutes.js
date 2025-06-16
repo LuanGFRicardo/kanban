@@ -7,11 +7,22 @@ import UsuariosController from "../controllers/usuariosController.js";
 // Cria um roteador do Express
 const router = express.Router();
 
-// Define a rota POST '/' que chama o método de criar um usuário
-router.post("/", UsuariosController.criarUsuario);
+// Criar um novo usuário
+router.post("/", UsuariosController.createUsuario);
 
-// Define a rota GET '/' que chama o método de listar todos os usuários
-router.get("/", UsuariosController.listarUsuarios);
+// Listar todos os usuários
+router.get("/", UsuariosController.getAllUsuarios);
 
-// Exporta o roteador para ser usado no app.js
+// Buscar usuário por ID
+router.get("/:id", UsuariosController.getUsuarioById);
+
+// Atualizar usuário
+router.put("/:id", UsuariosController.updateUsuario);
+
+// Deletar usuário
+router.delete("/:id", UsuariosController.deleteUsuario);
+
+// Buscar por nome
+router.get("/search/:nome", UsuariosController.searchUsuarioByNome);
+
 export default router;
