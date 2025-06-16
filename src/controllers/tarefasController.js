@@ -16,15 +16,23 @@ class TarefaController {
     }
   }
 
-  // Cadastra uma nova tarefa no banco de dados
-  static async cadastrarTarefa(req, res) {
+  createTarefa = async (req, res) => {
     try {
-      const novaTarefa = await Tarefa.create(req.body); // Cria uma nova tarefa com os dados enviados na requisição
-      res.status(201).json({ message: "Tarefa criada com sucesso!", tarefa: novaTarefa }); // Retorna a nova tarefa com status 201 (Criado)
+      const novaTarefa = await this.tarefaService.createTarefa(req.body);
+      res.status(201).json({
+        message: "Tarefa criada com sucesso!",
+        tarefa: new TarefaDto(novaTarefa),
+      });
     } catch (error) {
-      res.status(500).json({ message: `${error.message} - falha ao cadastrar tarefa` }); // Em caso de erro, retorna status 500
+      if (
+        error.message === "Quadro informado não existe." ||
+        error.message === "Coluna informada não existe."
+      ) {
+        return res.status(404).json({ message: error.message });
+      }
+      res.status(500).send(error.message);
     }
-  }
+  };
 
   // Busca uma tarefa específica pelo ID
   static async buscarTarefaPorId(req, res) {
