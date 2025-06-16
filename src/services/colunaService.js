@@ -1,5 +1,6 @@
 import { ColunaDto } from "../dtos/colunaDTO.js";
 import { ColunaRepository } from "../repositories/ColunaRepository.js";
+import Quadro from "../models/Quadro.js"; 
 
 export class ColunaService {
   constructor() {
@@ -8,6 +9,11 @@ export class ColunaService {
 
   createColuna = async (colunaData) => {
     const coluna = ColunaDto.fromRequest(colunaData);
+    // Verifica se o quadroId existe
+    const quadro = await Quadro.findByPk(coluna.quadroId);
+    if (!quadro) {
+      throw new Error("Quadro não existe.");
+    }
     return await this.colunaRepository.create(coluna);
   };
 
