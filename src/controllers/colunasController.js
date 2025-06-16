@@ -43,20 +43,20 @@ class ColunaController {
     }
   };
 
-  static async atualizarColuna(req, res) {
+  updateColuna = async (req, res) => {
     try {
-      const id = req.params.id;
-      const [atualizou] = await Coluna.update(req.body, { where: { id } });
-      if (atualizou) {
-        const colunaAtualizada = await Coluna.findByPk(id);
-        res.status(200).json({ message: "Coluna atualizada com sucesso", coluna: colunaAtualizada });
-      } else {
-        res.status(404).send("Coluna não encontrada");
+      const updatedColuna = await this.colunaService.updateColuna(req.params.id, req.body);
+      if (!updatedColuna) {
+        return res.status(404).send("Coluna não encontrada!");
       }
+      res.status(201).json({
+        message: "Coluna atualizada com sucesso!",
+        coluna: new ColunaDto(updatedColuna),
+      });
     } catch (error) {
-      res.status(500).json({ message: `${error.message} - falha ao atualizar coluna` });
+      res.status(500).send(error.message);
     }
-  }
+  };
 
   static async deletarColuna(req, res) {
     try {
