@@ -1,9 +1,11 @@
 import { UsuarioService } from "../services/usuarioService.js";
 import { UsuarioDto } from "../dtos/usuarioDTO.js";
 
-// Define a classe UsuariosController para controlar as operações relacionadas a usuários
-class UsuariosController {
-  
+class UsuarioController {
+  constructor() {
+    this.usuarioService = new UsuarioService();
+  }
+
   // Método para criar um novo usuário
   static async criarUsuario(req, res) {
     try {
