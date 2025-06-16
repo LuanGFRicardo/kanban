@@ -27,21 +27,14 @@ class UsuarioController {
     }
   };
 
-  // Método para buscar usuário por ID
-  static async buscarUsuarioPorId(req, res) {
+  getUsuarioById = async (req, res) => {
     try {
-      const { id } = req.params;
-      const usuario = await Usuario.findByPk(id);
-
-      if (usuario) {
-        res.status(200).json(usuario);
-      } else {
-        res.status(404).json({ message: "Usuário não encontrado" });
-      }
+      const usuario = await this.usuarioService.getUsuarioById(req.params.id);
+      res.status(200).json(new UsuarioDto(usuario));
     } catch (error) {
-      res.status(500).json({ message: error.message });
+      res.status(404).send(error.message);
     }
-  }
+  };
 
   // Método para atualizar usuário
   static async atualizarUsuario(req, res) {
