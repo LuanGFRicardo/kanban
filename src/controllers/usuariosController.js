@@ -18,15 +18,14 @@ class UsuarioController {
     }
   };
 
-  // Método para listar todos os usuários cadastrados
-  static async listarUsuarios(req, res) {
+  getAllUsuarios = async (req, res) => {
     try {
-      const usuarios = await Usuario.findAll(); // Busca todos os usuários cadastrados
-      res.status(200).json(usuarios); // Retorna a lista de usuários com status 200
+      const usuarios = await this.usuarioService.getAllUsuarios();
+      res.status(200).json(usuarios.map(u => new UsuarioDto(u)));
     } catch (error) {
-      res.status(500).json({ message: error.message }); // Em caso de erro, retorna status 500 e a mensagem do erro
+      res.status(500).send(error.message);
     }
-  }
+  };
 
   // Método para buscar usuário por ID
   static async buscarUsuarioPorId(req, res) {
