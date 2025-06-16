@@ -1,5 +1,6 @@
 import { QuadroDto } from "../dtos/quadroDTO.js";
 import { QuadroRepository } from "../repositories/QuadroRepository.js";
+import Usuario from "../models/Usuario.js"; 
 
 export class QuadroService {
   constructor() {
