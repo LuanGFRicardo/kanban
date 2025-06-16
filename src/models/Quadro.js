@@ -10,6 +10,10 @@ const Quadro = db.define("Quadro", {
   nome: {
     type: DataTypes.STRING,
     allowNull: false
+  },
+  usuarioId: {
+    type: DataTypes.INTEGER,
+    allowNull: false
   }
 }, {
   timestamps: true
