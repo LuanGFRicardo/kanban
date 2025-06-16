@@ -1,8 +1,10 @@
-// Importa o modelo Tarefa, que representa a tabela de tarefas no banco de dados
-import Tarefa from "../models/Tarefa.js";
+import { TarefaService } from "../services/tarefaService.js";
+import { TarefaDto } from "../dtos/tarefaDTO.js";
 
-// Define a classe TarefaController, que gerencia as operações relacionadas às tarefas
 class TarefaController {
+  constructor() {
+    this.tarefaService = new TarefaService();
+  }
 
   // Lista todas as tarefas cadastradas no banco de dados
   static async listarTarefas(req, res) {
