@@ -36,24 +36,20 @@ class UsuarioController {
     }
   };
 
-  // Método para atualizar usuário
-  static async atualizarUsuario(req, res) {
+  updateUsuario = async (req, res) => {
     try {
-      const { id } = req.params;
-      const [atualizou] = await Usuario.update(req.body, {
-        where: { id }
+      const usuarioAtualizado = await this.usuarioService.updateUsuario(
+        req.params.id,
+        req.body
+      );
+      res.status(200).json({
+        message: "Usuário atualizado com sucesso!",
+        usuario: new UsuarioDto(usuarioAtualizado),
       });
-
-      if (atualizou) {
-        const usuarioAtualizado = await Usuario.findByPk(id);
-        res.status(200).json({ message: "Usuário atualizado com sucesso", usuario: usuarioAtualizado });
-      } else {
-        res.status(404).json({ message: "Usuário não encontrado" });
-      }
     } catch (error) {
-      res.status(500).json({ message: error.message });
+      res.status(404).send(error.message);
     }
-  }
+  };
 
   // Método para deletar usuário
   static async deletarUsuario(req, res) {
