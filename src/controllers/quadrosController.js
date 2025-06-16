@@ -1,6 +1,11 @@
-import Quadro from "../models/Quadro.js";
+import { QuadroService } from "../services/quadroService.js";
+import { QuadroDto } from "../dtos/quadroDTO.js";
 
 class QuadroController {
+  constructor() {
+    this.quadroService = new QuadroService();
+  }
+  
   static async listarQuadros(req, res) {
     try {
       const quadros = await Quadro.findAll();
