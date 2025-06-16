@@ -1,6 +1,6 @@
 import { ColunaDto } from "../dtos/colunaDTO.js";
+import Quadro from "../models/Quadro.js";
 import { ColunaRepository } from "../repositories/ColunaRepository.js";
-import Quadro from "../models/Quadro.js"; 
 
 export class ColunaService {
   constructor() {
